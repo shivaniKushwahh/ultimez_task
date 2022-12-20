@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/ultimez_task/static/css/main.d68f6289.css",
+    "main.js": "/ultimez_task/static/js/main.d9ba6dd2.js",
+    "index.html": "/ultimez_task/index.html",
+    "main.d68f6289.css.map": "/ultimez_task/static/css/main.d68f6289.css.map",
+    "main.d9ba6dd2.js.map": "/ultimez_task/static/js/main.d9ba6dd2.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d68f6289.css",
+    "static/js/main.d9ba6dd2.js"
+  ]
+}
