@@ -4,6 +4,10 @@ import { useNavigate, NavLink } from "react-router-dom";
 const Profile = ({savedData }) => {
   const navigate = useNavigate()
   const token=localStorage.getItem("token")
+  const handleLogout = ()=>{
+    localStorage.removeItem("token")
+    navigate('/login')
+  }
   return (
    <>
    { token  ? <div className="profile">
@@ -35,12 +39,12 @@ const Profile = ({savedData }) => {
 
    <button
         className={basestyle.button_common}
-        onClick={()=> navigate('/login')}
+        onClick={()=> handleLogout()}
       >
         Logout
       </button>
     </div> : <div><h3 className="text-white">You must login first</h3>
-      <button className={basestyle.button_common} onClick={()=> navigate('/login')} >Logout</button>
+      <button className={basestyle.button_common} onClick={()=> handleLogout()} >Logout</button>
     </div> }
   </>
   );
