@@ -4,19 +4,19 @@ import registerstyle from "./Register.module.css";
 import axios from "axios";
 
 import { useNavigate, NavLink } from "react-router-dom";
-const Register = () => {
+const Register = ({setSavedData}) => {
   const navigate = useNavigate();
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const [user, setUserDetails] = useState({
     full_name: "",
-    uname: "",
+    username: "",
     email_id: "",
     password: "",
     mobile_number: "",
     country_row_id:"",
-    referralId:"",
+    referral_id:"",
   });
 
   const changeHandler = (e) => {
@@ -33,8 +33,8 @@ const Register = () => {
     if (!values.full_name) {
       error.full_name = "First Name is required";
     }
-    if (!values.uname) {
-      error.uname = "Last Name is required";
+    if (!values.username) {
+      error.username = "Last Name is required";
     }
     if (!values.email_id) {
       error.email_id = "email_id is required";
@@ -48,39 +48,27 @@ const Register = () => {
     } else if (values.password.length > 10) {
       error.password = "Password cannot exceed more than 10 characters";
     }
-    // if (!values.cpassword) {
-    //   error.cpassword = "Confirm Password is required";
-    // } else if (values.cpassword !== values.password) {
-    //   error.cpassword = "Confirm password and password should be same";
-    // }
+  
     return error;
   };
-  const signupHandler = (e) => {
-    e.preventDefault();
-    setFormErrors(validateForm(user));
-    setIsSubmit(true);
-    // if (!formErrors) {
-    //   setIsSubmit(true);
-    // }
-  };
-
- const headers= axios.interceptors.request.use(function (config) {
+  const headers= axios.interceptors.request.use(function (config) {
     const token = "Z9Q7WKEY7ORGBUFGN3EG1QS5Y7FG8DU29GHKKSZH" ;
     config.headers.api_key =  token;
 
     return config;
 });
-
-  useEffect(() => {
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(user);
-      axios.post(" https://lobster-app-ddwng.ondigitalocean.app/user/register", headers, user).then((res) => {
+  const signupHandler = (e) => {
+    e.preventDefault();
+    setFormErrors(validateForm(user));
+    setIsSubmit(true);
+    axios.post("https://lobster-app-ddwng.ondigitalocean.app/user/register",user, headers).then((res) => {
         console.log("++++++++++++IN signup",res)
-        // alert(res.data.message);
-        // navigate("/login", { replace: true });
+        setSavedData(res.data.message);
+        navigate("/login",);
       });
-    }
-  }, [formErrors]);
+  };
+
+
   return (
     <>
       <div className={registerstyle.register}>
@@ -98,11 +86,11 @@ const Register = () => {
           <p className={basestyle.error}>{formErrors.full_name}</p>
           <input
             type="text"
-            name="uname"
+            name="username"
             id="uname"
             placeholder="User Name"
             onChange={changeHandler}
-            value={user.uname}
+            value={user.username}
           />
           <input
             type="text"
@@ -141,11 +129,11 @@ const Register = () => {
           />
           <input
             type="text"
-            name="referralId"
-            id="referralId"
+            name="referral_id"
+            id="referral_id"
             placeholder="Referral Id"
             onChange={changeHandler}
-            value={user.referralId}
+            value={user.referral_id}
           />
           <p className={basestyle.error}>{formErrors.cpassword}</p>
           <button className={basestyle.button_common} onClick={signupHandler}>

@@ -1,81 +1,48 @@
 import React from "react";
 import basestyle from "../Base.module.css";
-const Profile = ({ setUserState, username }) => {
+import { useNavigate, NavLink } from "react-router-dom";
+const Profile = ({savedData }) => {
+  const navigate = useNavigate()
+  const token=localStorage.getItem("token")
   return (
-    <div className="profile">
-      <h1 style={{ color: "white" }}>Welcome {username} !!</h1>
-      <table class="table">
-  <thead class="thead-dark">
+   <>
+   { token  ? <div className="profile">
+      <h1 style={{ color: "white" }}>Welcome {savedData.username} !!</h1>
+      <table className="table table-bordered table-dark">
+  <thead>
     <tr>
-      <th scope="col">User_ID</th>
+      <th scope="col">user_id</th>
       <th scope="col">Full Name</th>
-      <th scope="col">UserName</th>
-      <th scope="col">Country</th>
+      <th scope="col">User Name</th>
+      <th scope="col">Country Code</th>
       <th scope="col">Email Id</th>
       <th scope="col">Mobile Number</th>
-      <th scope="col">referral Id</th>
+      <th scope="col">Referral Id</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
+    <th scope="row">{savedData._id}</th>
+      <td>{savedData.full_name}</td>
+      <td>{savedData.username}</td>
+      <td>{savedData.country_row_id}</td>
+      <td>{savedData.email_id}</td>
+      <td>{savedData.mobile_number}</td>
+      <td>{savedData.referral_row_id}</td>
     </tr>
   </tbody>
 </table>
 
-<table class="table">
-  <thead class="thead-light">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
-</table>
-
-      <button
+   <button
         className={basestyle.button_common}
-        onClick={() => setUserState({})}
+        onClick={()=> navigate('/login')}
       >
         Logout
       </button>
-    </div>
+    </div> : <div><h3 className="text-white">You must login first</h3>
+      <button className={basestyle.button_common} onClick={()=> navigate('/login')} >Logout</button>
+    </div> }
+  </>
   );
 };
 export default Profile;

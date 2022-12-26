@@ -3,31 +3,32 @@ import Profile from "./Components/Profile/Profile";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
 import { Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 function App() {
   const [userstate, setUserState] = useState({});
+  const [savedData, setSavedData] = useState(null)
+  useEffect(()=>{
+    console.log("+++++++++",savedData)
+  },[])
+  
   return (
     <div className="App">
         <Routes>
           <Route
             path="/"
             element={
-              userstate && userstate._id ? (
+            
                 <Profile
-                  setUserState={setUserState}
-                  username={userstate.fname}
+                  savedData={savedData}
                 />
-              ) : (
-                <Login setUserState={setUserState} />
-              )
             }
           ></Route>
           <Route
             path="/login"
-            element={<Login setUserState={setUserState} />}
+            element={<Login />}
           ></Route>
-          <Route path="/signup" element={<Register />}></Route>
+          <Route path="/signup" element={<Register setSavedData={setSavedData}/>}></Route>
         </Routes>
     </div>
   );
